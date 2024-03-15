@@ -39,6 +39,14 @@ class BlackJackTests(unittest.TestCase):
     self.assertEqual(BlackJack.calc_score(playerHand), playerScore)
     self.assertEqual(BlackJack.calc_score(houseHand), houseScore)
 
+  def test_play_hit(self):
+    deck = BlackJack.create_deck()
+    playerHand, houseHand = BlackJack.deal_hand(deck)
+    BlackJack.play_hit(playerHand, houseHand, deck)
+    
+    self.assertEqual(len(playerHand), 3)
+    self.assertEqual(len(houseHand), 2)
+
 if __name__ == '__main__':
   unittest.main()
 
