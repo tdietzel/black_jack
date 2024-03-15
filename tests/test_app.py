@@ -43,9 +43,22 @@ class BlackJackTests(unittest.TestCase):
     deck = BlackJack.create_deck()
     playerHand, houseHand = BlackJack.deal_hand(deck)
     BlackJack.play_hit(playerHand, houseHand, deck)
-    
-    self.assertEqual(len(playerHand), 3)
-    self.assertEqual(len(houseHand), 2)
+
+    self.assertTrue(3 <= len(playerHand) < 12)
+    self.assertTrue(2 <= len(houseHand) < 12)
+
+  def test_play_stand(self):
+    deck = BlackJack.create_deck()
+    playerHand, houseHand = BlackJack.deal_hand(deck)
+    playerScore = BlackJack.calc_score(playerHand)
+    houseScore = BlackJack.calc_score(houseHand)
+
+    winResult = BlackJack.play_stand(playerScore, houseScore, houseHand, deck)
+
+    if playerScore > houseScore and playerScore <= 21:
+      self.assertEqual(winResult, True)
+    else:
+      self.assertEqual(winResult, False)
 
 if __name__ == '__main__':
   unittest.main()

@@ -26,6 +26,12 @@ class BlackJack:
   def deal_hand(deck):
     player_hand = [deck.pop(), deck.pop()]
     house_hand = [deck.pop(), deck.pop()]
+
+    # player_score = BlackJack().calc_score(player_hand)
+    # house_score = BlackJack.calc_score(house_hand)
+
+    # if player_hand == 21:
+    #   BlackJack.play_stand(player_score, house_score, house_hand, deck)
     return player_hand, house_hand
 
   @staticmethod
@@ -66,9 +72,38 @@ class BlackJack:
       print("~---~---~---~----~---~---~---~----~")
       print(f"Your total: { player_score } | House total: { house_score }") # prints out total game score
 
-      game_choice = input("Do you want to hit?").lower()
+      game_choice = input("Do you want to hit? ").lower()
       if game_choice == 'yes':
         BlackJack.play_hit(player_hand, house_hand, deck)
+      elif game_choice == 'no':
+        return BlackJack.play_stand(player_score, house_score, house_hand, deck)
+
+  @staticmethod
+  def play_stand(player_score, house_score, house_hand, deck):
+    while house_score < player_score and house_score < 21:
+      new_card = deck.pop()
+      house_hand.append(new_card)
+      house_score = BlackJack.calc_score(house_hand)
+      print(f"House draws.. {new_card['rank']}", 'House is now at: ', house_score)
+
+    if player_score < house_score and house_score < 21:
+      print('You lost')
+      return False
+    elif player_score > house_score and player_score < 21:
+      print('You win')
+      return True
+    elif house_score > 21:
+      print('House went bust! You win')
+      return True
+    elif player_score == 21:
+      print('Blackjack! You win')
+      return True
+    elif house_score == 21:
+      print('House got Blackjack! You lose')
+      return False
+    else:
+      print("Draw")
+      return False
 
   @staticmethod
   def play_game():
@@ -76,11 +111,14 @@ class BlackJack:
     deck = blackjack.create_deck() #creates deck
     player_hand, house_hand = blackjack.deal_hand(deck) #deals hand
 
-    blackjack.print_hand(player_hand, False)
     blackjack.print_hand(house_hand, True)
+    blackjack.print_hand(player_hand, False)
 
     print('____________________________________________________')
-    if input('Do you want to hit? ') == 'yes':
+    game_choice = input('Do you want to hit? ')
+    if game_choice == 'yes':
       blackjack.play_hit(player_hand, house_hand, deck)
+    if game_choice == 'no':
+      blackjack.play_stand(blackjack.calc_score(player_hand), blackjack.calc_score(house_hand), house_hand, deck)
 
 BlackJack.play_game()
