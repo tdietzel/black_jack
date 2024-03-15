@@ -36,6 +36,13 @@ class BlackJack:
       for card in hand:
         print('Your cards:', f"{ card['rank'] } of { card['suit'] }")
     return hidden #changed to hidden from hand for testing
+  
+  @staticmethod
+  def calc_score(hand):
+    score = 0
+    for card in hand:
+      score += BlackJack().card_value(card)
+    return score
 
   @staticmethod
   def play_game():
@@ -45,7 +52,5 @@ class BlackJack:
 
     blackjack.print_hand(player_hand, False)
     blackjack.print_hand(house_hand, True)
-
-    return 
 
 BlackJack.play_game()
