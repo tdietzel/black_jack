@@ -6,3 +6,12 @@ def create_deck():
   deck = [{'rank': rank, 'suit': suit} for suit in suits for rank in ranks]
   random.shuffle(deck)
   return deck
+
+def card_value(card):
+  rank = card['rank']
+  if rank in [ 'J', 'Q', 'K']:
+    return 10
+  elif rank == 'A':
+    return 11
+  else:
+    return int(rank)
