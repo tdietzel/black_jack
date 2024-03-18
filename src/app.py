@@ -69,7 +69,7 @@ class BlackJack:
     if player_score > 21:
       print(f'\nYou flipped a {new_card["rank"]}. Your total is {player_score}')
       print('Bust! You lose')
-      game.balance -100
+      game.balance -= 100
       game.save_balance()
     elif player_score == 21:
       print(f'\nYou flipped a {new_card["rank"]}. Your total is {player_score}')
